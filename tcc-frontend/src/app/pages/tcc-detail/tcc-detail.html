@@ -1,0 +1,34 @@
+<p *ngIf="loading()" class="muted">Carregando…</p>
+
+<div *ngIf="!loading() && error()" class="card" style="color: var(--danger)">{{ error() }}</div>
+
+<ng-container *ngIf="tcc() as t">
+  <div class="toolbar">
+    <a class="btn" routerLink="/tccs">← Voltar</a>
+    <a class="btn btn-primary" [routerLink]="['/tccs', t.id, 'edit']">Editar</a>
+  </div>
+
+  <h1>{{ t.titulo }}</h1>
+
+  <div class="card detail">
+    <dl>
+      <dt>Status</dt><dd>{{ t.status_display || t.status }}</dd>
+      <dt>Tipo</dt><dd>{{ t.tipo_display || t.tipo }}</dd>
+      <dt>Idioma</dt><dd>{{ t.idioma_display || t.idioma }}</dd>
+      <dt>Semestre de Defesa</dt><dd>{{ t.semestre_letivo_defesa || '—' }}</dd>
+      <dt>Aluno</dt><dd>{{ alunoNome(t.aluno) }}</dd>
+      <dt>Orientador</dt><dd>{{ profNome(t.orientador) }}</dd>
+      <dt>Coorientador</dt><dd>{{ profNome(t.coorientador) }}</dd>
+      <dt>Presidente</dt><dd>{{ profNome(t.presidente) }}</dd>
+      <dt>1º Membro</dt><dd>{{ profNome(t.primeiro_membro) }}</dd>
+      <dt>2º Membro</dt><dd>{{ profNome(t.segundo_membro) }}</dd>
+      <dt>Palavras-chave</dt><dd>{{ t.palavras_chave }}</dd>
+      <dt>Resumo</dt><dd>{{ t.resumo }}</dd>
+      <dt>Arquivo</dt>
+      <dd>
+        <a *ngIf="t.arquivo" [href]="t.arquivo" target="_blank" rel="noopener">Visualizar / Baixar PDF</a>
+        <span *ngIf="!t.arquivo" class="muted">Nenhum arquivo enviado</span>
+      </dd>
+    </dl>
+  </div>
+</ng-container>

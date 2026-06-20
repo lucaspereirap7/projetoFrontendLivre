@@ -1,0 +1,21 @@
+<h1>Dashboard</h1>
+
+<p *ngIf="loading()" class="muted">Carregando estatísticas…</p>
+
+<div *ngIf="!loading() && error()" class="card" style="color: var(--danger)">{{ error() }}</div>
+
+<ng-container *ngIf="!loading() && !error()">
+  <div class="stat-card card">
+    <span class="stat-num">{{ total }}</span>
+    <span class="muted">TCCs cadastrados</span>
+  </div>
+
+  <div class="grid">
+    <div class="card chart-card" *ngFor="let c of charts">
+      <h3>{{ c.title }}</h3>
+      <div class="chart-box">
+        <canvas baseChart [type]="c.type" [data]="c.data" [options]="options"></canvas>
+      </div>
+    </div>
+  </div>
+</ng-container>

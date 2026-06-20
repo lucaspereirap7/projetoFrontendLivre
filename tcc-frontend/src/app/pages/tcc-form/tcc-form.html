@@ -1,0 +1,132 @@
+<div class="toolbar">
+  <a class="btn" routerLink="/tccs">← Voltar</a>
+</div>
+
+<h1>{{ id ? 'Editar TCC' : 'Novo TCC' }}</h1>
+
+<p *ngIf="loading()" class="muted">Carregando…</p>
+
+<ng-container *ngIf="!loading()">
+  <div *ngIf="error()" class="card" style="color: var(--danger); margin-bottom: 1rem">{{ error() }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="card form">
+    <label>
+      Título
+      <input type="text" formControlName="titulo" />
+    </label>
+
+    <label>
+      Resumo
+      <textarea formControlName="resumo"></textarea>
+    </label>
+
+    <label>
+      Palavras-chave
+      <input type="text" formControlName="palavras_chave" />
+    </label>
+
+    <div class="row">
+      <label>
+        Tipo
+        <select formControlName="tipo">
+          <option value="">Selecione…</option>
+          <option *ngFor="let t of tipoChoices" [value]="t.value">{{ t.label }}</option>
+        </select>
+      </label>
+
+      <label>
+        Idioma
+        <select formControlName="idioma">
+          <option value="">Selecione…</option>
+          <option *ngFor="let i of idiomaChoices" [value]="i.value">{{ i.label }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="row">
+      <label>
+        Aluno
+        <select formControlName="aluno">
+          <option [ngValue]="null">Selecione…</option>
+          <option *ngFor="let a of alunos" [ngValue]="a.id">{{ a.nome }} ({{ a.matricula }})</option>
+        </select>
+      </label>
+
+      <label>
+        Semestre de Defesa
+        <select formControlName="semestre_letivo_defesa">
+          <option [ngValue]="null">—</option>
+          <option *ngFor="let s of semestreChoices" [value]="s">{{ s }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="row">
+      <label>
+        Orientador
+        <select formControlName="orientador">
+          <option [ngValue]="null">Selecione…</option>
+          <option *ngFor="let p of professores" [ngValue]="p.id">{{ p.nome }}</option>
+        </select>
+      </label>
+
+      <label>
+        Coorientador (opcional)
+        <select formControlName="coorientador">
+          <option [ngValue]="null">—</option>
+          <option *ngFor="let p of professores" [ngValue]="p.id">{{ p.nome }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="row">
+      <label>
+        Presidente da Banca
+        <select formControlName="presidente">
+          <option [ngValue]="null">Selecione…</option>
+          <option *ngFor="let p of professores" [ngValue]="p.id">{{ p.nome }}</option>
+        </select>
+      </label>
+
+      <label>
+        1º Membro
+        <select formControlName="primeiro_membro">
+          <option [ngValue]="null">Selecione…</option>
+          <option *ngFor="let p of professores" [ngValue]="p.id">{{ p.nome }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="row">
+      <label>
+        2º Membro
+        <select formControlName="segundo_membro">
+          <option [ngValue]="null">Selecione…</option>
+          <option *ngFor="let p of professores" [ngValue]="p.id">{{ p.nome }}</option>
+        </select>
+      </label>
+
+      <label>
+        Status
+        <select formControlName="status">
+          <option *ngFor="let s of statusChoices" [value]="s.value">{{ s.label }}</option>
+        </select>
+      </label>
+    </div>
+
+    <label>
+      Arquivo (PDF)
+      <input type="file" accept="application/pdf" (change)="onFile($event)" />
+      <small *ngIf="existingArquivo" class="muted">
+        Atual: <a [href]="existingArquivo" target="_blank" rel="noopener">PDF</a> — envie um novo para substituir.
+      </small>
+    </label>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary" [disabled]="saving()">
+        {{ saving() ? 'Salvando…' : 'Salvar' }}
+      </button>
+      <span *ngIf="form.invalid && form.touched" class="muted">Preencha os campos obrigatórios.</span>
+    </div>
+  </form>
+</ng-container>
