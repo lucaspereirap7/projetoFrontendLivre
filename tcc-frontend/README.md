@@ -46,12 +46,6 @@ npm run build
 Saída em `dist/tcc-frontend/browser`. O build de produção troca o arquivo de ambiente
 por `src/environments/environment.prod.ts` (veja `fileReplacements` em `angular.json`).
 
-## Testes unitários
-
-```bash
-npm run test
-```
-
 ## Estrutura
 
 ```
