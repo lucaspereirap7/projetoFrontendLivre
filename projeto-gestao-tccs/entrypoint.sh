@@ -12,4 +12,4 @@ else
     echo "Dados ja existem: pulando load.py."
 fi
 
-exec python manage.py runserver 0.0.0.0:8000
+exec gunicorn tcc_project.wsgi:application --bind 0.0.0.0:8000 --workers 2
