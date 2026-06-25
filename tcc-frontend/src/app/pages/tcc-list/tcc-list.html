@@ -38,7 +38,7 @@
         </select>
       </td>
       <td>
-        <a *ngIf="tcc.arquivo" [href]="'https://docs.google.com/viewer?url=' + tcc.arquivo" target="_blank" rel="noopener">PDF</a>
+        <a *ngIf="tcc.arquivo" [href]="arquivoUrl(tcc.id)" target="_blank" rel="noopener">PDF</a>
         <span *ngIf="!tcc.arquivo" class="muted">—</span>
       </td>
       <td class="actions">

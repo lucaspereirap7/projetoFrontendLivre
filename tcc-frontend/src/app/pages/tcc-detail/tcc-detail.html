@@ -26,7 +26,7 @@
       <dt>Resumo</dt><dd>{{ t.resumo }}</dd>
       <dt>Arquivo</dt>
       <dd>
-        <a *ngIf="t.arquivo" [href]="'https://docs.google.com/viewer?url=' + t.arquivo" target="_blank" rel="noopener">Visualizar PDF</a>
+        <a *ngIf="t.arquivo" [href]="arquivoUrl(t.id)" target="_blank" rel="noopener">Visualizar PDF</a>
         <span *ngIf="!t.arquivo" class="muted">Nenhum arquivo enviado</span>
       </dd>
     </dl>

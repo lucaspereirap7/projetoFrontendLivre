@@ -5,6 +5,7 @@ import { forkJoin } from 'rxjs';
 import { TccService } from '../../services/tcc.service';
 import { LookupsService } from '../../services/lookups.service';
 import { Tcc } from '../../models/models';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-tcc-detail',
@@ -42,6 +43,10 @@ export class TccDetail implements OnInit {
         this.loading.set(false);
       },
     });
+  }
+
+  arquivoUrl(id: number): string {
+    return `${environment.apiUrl}tccs/${id}/arquivo/`;
   }
 
   alunoNome(id: number): string {

@@ -8,3 +8,4 @@ psycopg2-binary==2.9.10
 gunicorn==23.0.0
 cloudinary==1.42.1
 django-cloudinary-storage==0.3.0
+requests==2.32.3

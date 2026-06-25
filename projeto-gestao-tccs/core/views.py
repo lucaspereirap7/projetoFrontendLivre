@@ -2,6 +2,8 @@ from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Count
+from django.http import StreamingHttpResponse
+import requests as http_client
 from .models import UnidadeAcademica, Departamento, Curso, Aluno, Professor, TCC
 from .serializers import (
     UnidadeAcademicaSerializer, DepartamentoSerializer, CursoSerializer,
@@ -37,6 +39,19 @@ class TCCViewSet(viewsets.ModelViewSet):
     serializer_class = TCCSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['titulo', 'resumo']
+
+    @action(detail=True, methods=['get'], url_path='arquivo')
+    def arquivo(self, request, pk=None):
+        tcc = self.get_object()
+        if not tcc.arquivo:
+            return Response({'error': 'Arquivo não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+        file_url = tcc.arquivo.url
+        resp = http_client.get(file_url, stream=True, timeout=30)
+        return StreamingHttpResponse(
+            resp.iter_content(chunk_size=8192),
+            content_type='application/pdf',
+            headers={'Content-Disposition': 'inline; filename="documento.pdf"'},
+        )
 
     @action(detail=False, methods=['get'])
     def estatisticas(self, request):

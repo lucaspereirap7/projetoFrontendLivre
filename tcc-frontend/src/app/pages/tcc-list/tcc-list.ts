@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TccService } from '../../services/tcc.service';
 import { Tcc, STATUS_CHOICES } from '../../models/models';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-tcc-list',
@@ -47,6 +48,10 @@ export class TccList implements OnInit {
       },
       error: () => alert('Falha ao atualizar o status.'),
     });
+  }
+
+  arquivoUrl(id: number): string {
+    return `${environment.apiUrl}tccs/${id}/arquivo/`;
   }
 
   remove(tcc: Tcc): void {
