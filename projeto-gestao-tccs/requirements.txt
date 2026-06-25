@@ -6,3 +6,5 @@ djangorestframework==3.16.1
 sqlparse==0.5.5
 psycopg2-binary==2.9.10
 gunicorn==23.0.0
+cloudinary==1.42.1
+django-cloudinary-storage==0.3.0
